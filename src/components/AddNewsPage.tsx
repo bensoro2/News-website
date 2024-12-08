@@ -3,6 +3,8 @@
 import { useState, useEffect } from "react";
 import AdminDashboard from "./AdminDashboard";
 import { useRouter } from "next/navigation";
+import { CKEditor } from "@ckeditor/ckeditor5-react";
+import ClassicEditor from "@ckeditor/ckeditor5-build-classic";
 
 const AddNewsPage = () => {
   const [title, setTitle] = useState("");
@@ -12,6 +14,25 @@ const AddNewsPage = () => {
   const [type, setType] = useState("");
 
   const router = useRouter();
+
+  const editorConfiguration = {
+    toolbar: [
+      "heading",
+      "|",
+      "bold",
+      "italic",
+      "link",
+      "bulletedList",
+      "numberedList",
+      "blockQuote",
+      "imageUpload",
+      "undo",
+      "redo",
+    ],
+    ckfinder: {
+      uploadUrl: "http://localhost:3001/upload",
+    },
+  };
 
   useEffect(() => {
     fetchTypes();
@@ -79,13 +100,15 @@ const AddNewsPage = () => {
           </div>
           <div className="mb-4">
             <label className="block text-gray-700 mb-1">Description</label>
-            <textarea
-              className="w-full px-4 py-2 border rounded-md focus:outline-none"
-              value={description}
-              onChange={(e) => setDescription(e.target.value)}
-              rows={5}
-              required
-            ></textarea>
+            <CKEditor
+              editor={ClassicEditor}
+              config={editorConfiguration}
+              data={description}
+              onChange={(event, editor) => {
+                const data = editor.getData();
+                setDescription(data);
+              }}
+            />
           </div>
           {/* ช่องเลือกประเภทข่าว */}
           <div className="mb-4">

@@ -37,7 +37,7 @@ const EditNewsPage = () => {
       "redo",
     ],
     ckfinder: {
-      uploadUrl: "http://localhost:3001/upload", // URL สำหรับอัปโหลดรูปภาพไปยัง Backend
+      uploadUrl: "http://localhost:3001/upload",
     },
   };
 
